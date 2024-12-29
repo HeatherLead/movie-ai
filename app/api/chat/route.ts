@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Buffer } from 'buffer';
 
+export const runtime = 'edge'; // This indicates that the route should run as an edge function
+
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 
 function fileToGenerativePart(buffer: Buffer, mimeType: string) {
@@ -47,16 +49,10 @@ export async function POST(request: NextRequest) {
     const imdbResponse = await fetch(url, options);
     const imdbData = await imdbResponse.json();
 
-    const movieId = imdbData.titleResults.results[0].id
+    const movieId = imdbData.titleResults.results[0].id;
     return NextResponse.json({ success: true, movieId });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ success: false });
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: false, 
-  },
-};

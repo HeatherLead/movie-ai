@@ -34,7 +34,7 @@ interface movieData {
   };
 }
 
-const page = () => {
+const Page = () => {
   const [data, setData] = useState<movieData | null>(null);
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
   const url = usePathname();
@@ -178,4 +178,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
